@@ -1,0 +1,143 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usetheme{Arguelles}
+
+\title{Tutorial 1}
+\subtitle{CS3241 Computer Graphics (AY22/23)}
+\date{\today}
+\author{Wong Pei Xian}
+\institute[]{\email{e0389023@u.nus.edu}}
+
+\begin{document}
+
+\frame[plain]{\titlepage}
+
+\section{Question 1}
+
+\begin{frame}
+    \frametitle{Question 1}
+    To be able to display \textbf{realistic} images, our display devices need to be able to produce 
+    every frequency in the visible light spectrum.
+    
+    \vspace*{1em}
+    
+    True or false? Why? What are the advantages and disadvantages?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Three-Color Theory}
+
+    To be \textbf{realistic to human} \\
+    $\Rightarrow$ To be compatible with 
+    \textcolor{red}{human} \textcolor{blue}{visual} \textcolor{green}{system}
+    (L01, slide 35)
+
+    \begin{itemize}
+        \item Rods: Monochromatic
+        \item \textbf{Cones}: Color sensitive to wavelengths
+        \begin{itemize}
+            \item Long \textcolor{red}{$\approx$ red}
+            \item Medium \textcolor{green}{$\approx$ green}
+            \item Short \textcolor{blue}{$\approx$ blue}
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Proportion} of the three gives us the sensation of different colors.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cones sensitivity}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Additive color}
+
+    
+
+\end{frame}
+
+\section{Question 2}
+
+\begin{frame}
+    \frametitle{Question 2}
+
+    Each pixel in a frame-buffer has 8 bits for each of the R, G and B channels. How many different
+    colors can each pixel represent? Is this enough? On some systems, each pixel has only 8 bits
+    (for all R, G, and B combined). How would you allocate the bits to the R, G and B primaries?
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{8-bit representation of color}
+
+    
+
+\end{frame}
+
+\section{Question 3}
+
+\begin{frame}
+    \frametitle{Question 3}
+    Referring to Lecture 1 Slide 26. If an imaginary image plane is d unit distance in front of the
+    pinhole camera, what are the coordinates of the projection (on the imaginary image plane) of
+    the 3D point (x, y, z)?
+\end{frame}
+
+\section{Question 4}
+
+\begin{frame}
+    \frametitle{Question 4}
+    Why do we need a primitive assembly stage in the rendering pipeline architecture?
+\end{frame}
+
+\section{Question 5}
+
+\begin{frame}
+    \frametitle{Question 5}
+    What does the rasterization stage (rasterizer) do in the rendering pipeline architecture?
+    Describe what it does to a triangle that is supposed to be filled, and the three vertices have
+    different color. Assume smooth shading is turned on.
+\end{frame}
+
+\section{Question 6}
+
+\begin{frame}
+    \frametitle{Question 6}
+    What is hidden-surface removal? When is it not necessary?
+\end{frame}
+
+\section{Question 7}
+
+\begin{frame}
+    \frametitle{Question 7}
+    Which of the two following program fragments is more efficient? Why?
+    Can the same optimization be done for the case of \texttt{GL\_POLYGON}?
+\end{frame}
+
+\section{Question 8}
+
+\begin{frame}
+    \frametitle{Question 8}
+    OpenGL supports the GL\_TRIANGLES primitive type. Why do you think that OpenGL also
+    supports GL\_TRIANGLE\_FAN and GL\_TRIANGLE\_STRIP?
+\end{frame}
+
+\section{Question 9}
+
+\begin{frame}
+    \frametitle{Question 9}
+    Devise a test to check whether a polygon in 3D space is planar.
+\end{frame}
+
+\section{Question 10}
+
+\begin{frame}
+    \frametitle{Question 10}
+
+    Devise a test to check whether a polygon on the x-y plane is convex.
+\end{frame}
+
+\end{document}
