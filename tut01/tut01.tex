@@ -1,6 +1,16 @@
 \documentclass{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=white,
+    urlcolor=cyan,
+    urlbordercolor=cyan,
+}
+\graphicspath{ {./images/} }
 
 \usetheme{Arguelles}
 
@@ -48,15 +58,40 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Cones sensitivity}
+    \frametitle{Cone sensitivity and Additive color theory}
+
+    Single frequency = proportion of responses of each cone.
+
+    \begin{center}
+        \includegraphics[scale=0.2]{images/cone-vision.png}
+    \end{center}
 
 \end{frame}
 
 \begin{frame}
-    \frametitle{Additive color}
+    \frametitle{Additive Color Display}
+    \framesubtitle{Pros}
 
+    \begin{enumerate}
+        \item We don't have to produce light of every wavelength in vis. light spectrum for realism
+        \item We can see colors that are \textbf{NOT} on vis. light spectrum (e.g. \textcolor{purple}{\textbf{PURPLE}}).
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Additive Color Display}
+    \framesubtitle{Cons}
+
+    Two different RGB values can produce the same color.\\
+
+    \begin{tcolorbox}
+        Q: What's an example of this?\\
+
+        A: There is no definitive inverse mapping of RGB to a wavelength, as it is display dependent. \\
+        {\tiny \url{https://physics.stackexchange.com/questions/248139/can-two-different-rgb-color-triplets-give-the-same-color}}
+    \end{tcolorbox}
     
-
 \end{frame}
 
 \section{Question 2}
@@ -65,15 +100,62 @@
     \frametitle{Question 2}
 
     Each pixel in a frame-buffer has 8 bits for each of the R, G and B channels. How many different
-    colors can each pixel represent? Is this enough? On some systems, each pixel has only 8 bits
-    (for all R, G, and B combined). How would you allocate the bits to the R, G and B primaries?
+    colors can each pixel represent? Is this enough?
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{32-bit color}
+
+    Each of the following four channels is described in \textbf{8 bits}.
+    \begin{itemize}
+        \item R
+        \item G
+        \item B
+        \item (not in this question) A for Alpha (transparency)
+    \end{itemize}
+
+    Hence color has 32 bits: $2^32$ values (can be represented with an \texttt{int})!
+
+    Based on RGB only: $2^{24} = \textbf{16,777,216}$. 
+    See: \hyperlink{https://computer.howstuffworks.com/monitor4.htm}{Color Depth}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{32-bit color}
+    \framesubtitle{Is this enough?}
+
+    256 shades of gray: \textbf{banding artifacts}.
+
+    \begin{center}
+        \includegraphics[scale=0.25]{greyscale-levels.png}
+    \end{center}
+
+    Use case decides if this is undesirable or not.
 
 \end{frame}
 
 \begin{frame}
     \frametitle{8-bit representation of color}
+    On some systems, each pixel has only 8 bits (for all R, G, and B combined). 
+    How would you allocate the bits to the R, G and B primaries?
 
-    
+    \begin{center}
+        \includegraphics[scale=0.2]{images/cone-vision.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{8-bit representation of color}
+    On some systems, each pixel has only 8 bits (for all R, G, and B combined). 
+    How would you allocate the bits to the R, G and B primaries?
+
+    \begin{tcolorbox}
+        3:3:2 for R:G:B. Our eyes are less sensitive to changes in blue, 
+        as you can see from the normalized cone response for high frequencies.
+    \end{tcolorbox}
 
 \end{frame}
 
@@ -86,11 +168,53 @@
     the 3D point (x, y, z)?
 \end{frame}
 
+\begin{frame}
+    \frametitle{Similar triangles}
+
+    {\centering
+        \includegraphics[scale=0.8]{similar-tris.png}
+    }
+
+    $$
+    \frac{AE}{AD} = \frac{AF}{AG} = \frac{EF}{DG}
+    $$
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Answer}
+
+    \begin{itemize}
+        \item $z_p = d$ (Why?)
+        \item $x_p = dx/z$
+        \item $y_p = dy/z$
+    \end{itemize}
+
+\end{frame}
+
 \section{Question 4}
 
 \begin{frame}
     \frametitle{Question 4}
-    Why do we need a primitive assembly stage in the rendering pipeline architecture?
+    Why do we need a \textbf{primitive assembly} stage in the rendering pipeline architecture?
+
+    \vspace{1em}
+
+    {\centering \includegraphics[scale=0.4]{simple-pipeline.png}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Primitive Assembly}
+    \framesubtitle{Rendering pipeline}
+    
+    {\centering \includegraphics[scale=0.4]{simple-pipeline-annot.png}}
+
+    \vspace{1em}
+
+    \begin{tcolorbox}
+        \textbf{Primitive}: One polygonal unit
+    \end{tcolorbox}
+
 \end{frame}
 
 \section{Question 5}
@@ -98,8 +222,31 @@
 \begin{frame}
     \frametitle{Question 5}
     What does the rasterization stage (rasterizer) do in the rendering pipeline architecture?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 5}
     Describe what it does to a triangle that is supposed to be filled, and the three vertices have
     different color. Assume smooth shading is turned on.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rasterization}
+    \framesubtitle{Rendering pipeline}
+
+    (Lecture 1 Slide 40)
+
+    Assigning colors to pixels occupied by a primitive/polygon.
+
+    \begin{enumerate}
+        \item Each vertex has an attribute.
+        \item Each attribute is \textbf{interpolated} across the vertices.
+    \end{enumerate}
+
+    \vspace{1em}
+
+    {\centering \includegraphics[scale=0.2]{rastertri.png}}
+
 \end{frame}
 
 \section{Question 6}
@@ -109,12 +256,63 @@
     What is hidden-surface removal? When is it not necessary?
 \end{frame}
 
+\begin{frame}
+    \frametitle{Hidden Surface Removal}
+
+    \url{https://gabrielgambetta.com/computer-graphics-from-scratch/12-hidden-surface-removal.html}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{hsr.png}
+    \end{center}
+
+\end{frame}
+
 \section{Question 7}
 
 \begin{frame}
     \frametitle{Question 7}
     Which of the two following program fragments is more efficient? Why?
+
+    \begin{center}
+        \includegraphics[scale=0.6]{q7.png}
+    \end{center}
+
     Can the same optimization be done for the case of \texttt{GL\_POLYGON}?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Calls to \texttt{glBegin} and \texttt{glEnd}}
+
+    \begin{center}
+        \includegraphics[scale=0.6]{q7-annot.png}
+    \end{center}
+
+    Note that OpenGL (together with mosts other graphics engines)
+    is a \textbf{state machine}. Method B greatly reduces the number of state changes.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{What about GL\_POLYGON?}
+
+    We can't do this with GL\_POLYGON or we'll be defining one massive
+    $3N$-vertex polygon.
+
+    \begin{center}
+        \includegraphics[scale=0.6]{gl-polygon.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{WebGL State Machine visualizer/debugger tool}
+
+    \begin{center}
+        \includegraphics[scale=0.2]{webgl-fsm.png}
+    \end{center}
+
+    \url{https://webglfundamentals.org/webgl/lessons/resources/webgl-state-diagram.html}
+
 \end{frame}
 
 \section{Question 8}
@@ -123,6 +321,27 @@
     \frametitle{Question 8}
     OpenGL supports the GL\_TRIANGLES primitive type. Why do you think that OpenGL also
     supports GL\_TRIANGLE\_FAN and GL\_TRIANGLE\_STRIP?
+
+    \begin{center}
+        \includegraphics[scale=0.3]{tri-fan-strip.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comparison}
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Type & Vertices & Triangles\\
+            \hline
+            GL\_TRIANGLES & 3n & n\\
+            GL\_TRIANGLE\_FAN & n + 2 & n\\
+            GL\_TRIANGLE\_STRIP & n + 2 & n\\
+            \hline
+        \end{tabular}
+    \end{center}
+
 \end{frame}
 
 \section{Question 9}
@@ -138,6 +357,13 @@
     \frametitle{Question 10}
 
     Devise a test to check whether a polygon on the x-y plane is convex.
+\end{frame}
+
+\ThankYou
+\begin{frame}[plain,standout]
+    Thanks!
+ \vfill\scalebox{4}{\faGithub}\par\bigskip
+ \url{https://github.com/}
 \end{frame}
 
 \end{document}
