@@ -102,23 +102,26 @@
     Each pixel in a frame-buffer has 8 bits for each of the R, G and B channels. How many different
     colors can each pixel represent? Is this enough?
 
+    \begin{tcolorbox}
+        8 bits per channel (R, G, B): $2^{24} = \textbf{16,777,216}$ colors. 
+    \end{tcolorbox}
+
 \end{frame}
 
 \begin{frame}
     \frametitle{32-bit color}
 
-    Each of the following four channels is described in \textbf{8 bits}.
+    In most graphical applications today, we have 4 channels:
     \begin{itemize}
         \item R
         \item G
         \item B
-        \item (not in this question) A for Alpha (transparency)
+        \item (not included in this question) A for Alpha (transparency)
     \end{itemize}
 
-    Hence color has 32 bits: $2^32$ values (can be represented with an \texttt{int})!
+    Hence color has 32 bits: $2^{32}$ values (can be represented with an \texttt{int})!
 
-    Based on RGB only: $2^{24} = \textbf{16,777,216}$. 
-    See: \hyperlink{https://computer.howstuffworks.com/monitor4.htm}{Color Depth}
+    On color depth: \url{https://computer.howstuffworks.com/monitor4.htm}
 
 \end{frame}
 
@@ -142,7 +145,7 @@
     How would you allocate the bits to the R, G and B primaries?
 
     \begin{center}
-        \includegraphics[scale=0.2]{images/cone-vision.png}
+        \includegraphics[scale=0.2]{cone-vision.png}
     \end{center}
 
 \end{frame}
@@ -171,9 +174,9 @@
 \begin{frame}
     \frametitle{Similar triangles}
 
-    {\centering
+    \begin{center}
         \includegraphics[scale=0.8]{similar-tris.png}
-    }
+    \end{center}
 
     $$
     \frac{AE}{AD} = \frac{AF}{AG} = \frac{EF}{DG}
@@ -182,13 +185,17 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Answer}
+    \frametitle{Perspective}
 
-    \begin{itemize}
-        \item $z_p = d$ (Why?)
-        \item $x_p = dx/z$
-        \item $y_p = dy/z$
-    \end{itemize}
+    \begin{center}
+        \includegraphics[scale=0.3]{q3-similar-tris.png}
+    \end{center}
+
+    Notice that $OPZ$ and $OP'Z'$ are similar triangles as their internal angles are identical.
+
+    $$
+    \frac{x}{x'} = \frac{y}{y'} = \frac{z}{z'} \text{ and by definition } z' = d
+    $$
 
 \end{frame}
 
@@ -259,11 +266,25 @@
 \begin{frame}
     \frametitle{Hidden Surface Removal}
 
-    \url{https://gabrielgambetta.com/computer-graphics-from-scratch/12-hidden-surface-removal.html}
+    If
+    \begin{enumerate}
+        \item We have one object with no overlapping surfaces, or
+        \item Painter's Algorithm is already sorting the surfaces from back to front
+    \end{enumerate}
+    then we don't need hidden surface removal.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Some hidden surface removal techniques and why we need them}
 
     \begin{center}
         \includegraphics[scale=0.3]{hsr.png}
     \end{center}
+
+    {\small
+        \url{https://gabrielgambetta.com/computer-graphics-from-scratch/12-hidden-surface-removal.html}
+    }
 
 \end{frame}
 
@@ -351,6 +372,63 @@
     Devise a test to check whether a polygon in 3D space is planar.
 \end{frame}
 
+\begin{frame}
+    \frametitle{Method from Tutorial answer}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{planar.png}
+    \end{center}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Improved method}
+
+    Note that a plane can be defined by the following equation:
+
+    $$
+    n \cdot (p - p_0) = 0
+    $$
+
+    where $n$ is the \textbf{normal of the plane}. 
+
+    \begin{center}
+        \includegraphics[scale=0.3]{plane-def.png}
+    \end{center}
+
+    This is because dot product of two vectors is zero if and only if they are perpendicular!
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Improved method}
+
+    Hence let's set the normal of this polygon to be $(v_1 - v_2) \times (v_3 - v_2)$.
+
+    \begin{center}
+        \includegraphics[scale=0.25]{planar-m2.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Improved Method}
+
+    For each of the vertices $v_i \in \{v_1, v_2, v_3, \dots, v_n\}$, if 
+
+    $$
+    n \cdot (v_i - v_2) = 0
+    $$
+
+    then the polygon is planar.
+
+    \begin{tcolorbox}
+        This is an improvement as cross product is slightly more computationally expensive than dot product
+        (cross product involves more operations than dot product). Asymptotically the runtime is still the same ($O(n)$).
+    \end{tcolorbox}
+
+\end{frame}
+
 \section{Question 10}
 
 \begin{frame}
@@ -359,11 +437,62 @@
     Devise a test to check whether a polygon on the x-y plane is convex.
 \end{frame}
 
+\begin{frame}
+    \frametitle{What is a convex polygon}
+
+    Convex polygon is a polygon that is identical to its \textbf{convex hull}.\\
+
+    \begin{center}
+        \includegraphics[scale=0.3]{convex-def.png}
+    \end{center}
+
+    If you choose any two points on the boundary of a convex polygon and draw a line between, 
+    the line should be entirely contained within the polygon.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Method from Tutorial answer}
+
+    \begin{center}
+        \includegraphics[scale=0.2]{convex.png}
+    \end{center}
+
+    Iterating through $i = 0$ to $n-1$ where there are $n$ vertices, find each
+
+    $$
+    n_i = \|(v_{i-1} - v_{i}) \times (v_{i+1} - v_{i})\|
+    $$
+    
+    if \textbf{at least one $n_i$ is not identical to the rest}, then polygon is non-convex.
+
+    {\tiny Note: I'm omitting that you have to take the $x\mod n$ of each of the $v_x$ here for conciseness. }
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Inner angles}
+
+    One property of convex polygons: all interior angles $<180^{\circ}$
+
+    \vspace{1em}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{dot-prod.png}
+    \end{center}
+
+    Checking this is tricky as the dot product of the vectors $v_4- v_5$ and $v_1 - v_5$ gives you $\cos\alpha$, 
+    not the cosine of the interior angle $2\pi - \alpha$.
+
+\end{frame}
+
+
 \ThankYou
 \begin{frame}[plain,standout]
-    Thanks!
- \vfill\scalebox{4}{\faGithub}\par\bigskip
- \url{https://github.com/}
+    Thanks! Get the slides here.\\
+    \vspace{2em}
+    \scalebox{3}{\faGithub}\par\bigskip
+    \url{trxe.github.io/cs3241-notes}
 \end{frame}
 
 \end{document}
