@@ -1,0 +1,392 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=white,
+    urlcolor=cyan,
+    urlbordercolor=cyan,
+}
+\graphicspath{ {./images/} }
+
+\usetheme{Arguelles}
+
+\title{Tutorial 2}
+\subtitle{CS3241 Computer Graphics (AY22/23)}
+\date{\today}
+\author{Wong Pei Xian}
+\institute[]{\email{e0389023@u.nus.edu}}
+
+\begin{document}
+
+\frame[plain]{\titlepage}
+
+\section{Question 1}
+
+\begin{frame}
+    \frametitle{Question 1}
+    What is a GLUT display callback function?  
+    Give example events for which the display callback function should be called.
+\end{frame}
+
+\begin{frame}
+    \frametitle{GLUT function}
+
+    \begin{tcolorbox}
+        \textbf{GLUT}: OpenGL Utility Toolkit (Lecture 2 slide 10), \\
+        
+        a \textbf{library} that provides I/O functionality common to \textcolor{teal}{all window systems}.
+    \end{tcolorbox}
+
+    \begin{center}
+        \includegraphics[]{q1-glut-callbacks.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{GLUT display callback}
+
+    \begin{itemize}
+        \item \texttt{glutDisplayFunc()}
+        \item User-defined callback to register
+        \item Executed on each window refresh.
+    \end{itemize}
+
+\end{frame}
+
+\section{Question 2}
+
+\begin{frame}
+    \frametitle{Question 2}
+
+    What is the use of the GLUT function \texttt{glutPostRedisplay()}?
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{\texttt{glutPostRedisplay}}
+
+    The execution of the \texttt{glutPostRedisplay()} function tells GLUT to call the 
+    display callback function at the end of the current event loop. \\
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 2}
+
+    When do we want to call the \texttt{glutPostRedisplay()} function? 
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+
+    When we explicitly want the rendered image to be updated.  
+
+    \vspace{1em}
+
+    \begin{tcolorbox}
+        Q: Why don’t we call the display callback function directly to update the image?\\
+        \vspace{1em}
+        A: \textbf{Multiple calls} to \texttt{glutPostRedisplay} may be made in a single iteration of main loop,
+        we don't want to redisplay (reapply graphics to buffer) everytime.
+    \end{tcolorbox}
+
+    \hyperlink{Reference}{https://www.opengl.org/resources/libraries/glut/spec3/node20.html}
+
+\end{frame}
+
+\section{Question 3}
+
+\begin{frame}
+    \frametitle{Question 3}
+    How does double buffering work?  Why do we use it?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Double buffering}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q3-step1.png}
+    \end{center}
+
+    \begin{itemize}
+        \item Back buffer: apply graphics \textbf{WHILE}
+        \item Front buffer: display graphics 
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Double buffering}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q3-step2.png}
+    \end{center}
+
+    Swapping is fast and seamless.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Prevents screen tearing}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{screen-tear.jpg}
+    \end{center}
+
+    \begin{tcolorbox}
+        \textbf{Screen tearing}: 
+        when the rate of graphics feed application $\neq$ window refresh rate.
+    \end{tcolorbox}
+
+    Notice how double buffering solves this by making sure graphics are not applied to the currently displayed frame,
+    only swapping the frames when the application is complete.
+
+\end{frame}
+
+\section{Question 4}
+
+\begin{frame}
+    \frametitle{Question 4}
+    The use of any special hidden surface removal method is not necessary if we can sort the polygons in a back-to-front order 
+    and render these polygons in that order. (Tutorial 1 Q6)\\
+
+    \vspace{1em}
+    
+    Is it \textbf{always possible} that any set of polygons can be sorted in a back-to-front order?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cyclic overlap}
+
+    \begin{center}
+        \includegraphics[scale=0.6]{cyclic-overlap.png}
+    \end{center}
+
+\end{frame}
+
+\section{Question 5}
+
+\begin{frame}
+    \frametitle{Question 5a}
+
+    What is an OpenGL viewport?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Viewport}
+
+    \begin{tcolorbox}
+        OpenGL viewport: A rectangular region of the window in which OpenGL can draw.
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 5b}
+
+    How do you specify one?
+\end{frame}
+
+\begin{frame}
+    \frametitle{\texttt{glViewport}}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{viewport.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        \begin{center}
+            \texttt{glViewport(GLint x, GLint y, GLsizei w, GLsizei h)}
+        \end{center}
+    \end{tcolorbox}
+
+    Note: $x,y,w,h$ are in window coordintes.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 5c}
+
+    Can we have \textbf{multiple viewports} in one window?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Yes!}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{multiple-viewports.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Yes!}
+
+    \begin{center}
+        \includegraphics[scale=0.2]{it-takes-two.jpg}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 5d, 5e}
+
+    Can a viewport be larger than the window?
+    \vspace{1em}
+    If yes, what will happen?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Yes!}
+
+    \begin{center}
+        \includegraphics[scale=0.5]{glviewport.png}
+    \end{center}
+
+    Parameter types are \texttt{GLint} for x and y coordinates, so they can be negative and go out of the screen.\\
+
+    \vspace{1em}
+
+    Or \texttt{width} or \texttt{height} could also exceed window size.
+
+    \textbf{Viewport size is independent of window size.}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Specification example}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{viewport-window.png}
+    \end{center}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 5f}
+
+    When you use \texttt{glClear(GL\_COLOR\_BUFFER\_BIT)},
+    are you clearing the entire window or just the viewport?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 5f}
+
+    When you use \texttt{glClear(GL\_COLOR\_BUFFER\_BIT)},
+    are you clearing the entire window or just the viewport?
+
+    \begin{tcolorbox}
+        Answer: the window.
+    \end{tcolorbox}
+\end{frame}
+
+\section{Question 6}
+
+\begin{frame}
+    \frametitle{Question 6}
+
+    Assume we have the following OpenGL function calls:
+
+    \begin{tcolorbox}
+        \texttt{\\
+            glViewport( u, v, w, h ); \\
+            ... \\
+            gluOrtho2D( x\_min, x\_max, y\_min, y\_max );\\
+        }
+    \end{tcolorbox}
+
+    Find the mathematical expressions that map a point $(x, y)$ that lies within the 
+    clipping rectangle to a point $(xs, ys)$ that lies within the viewport.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Clip space to window space}
+
+    \begin{center}
+        \includegraphics[]{clip-window.png}
+    \end{center}
+    
+    $x_s = u + (x-x_{\min}) (\frac{w}{x_{\max} - x_{\min}})$\\
+    $y_s = v + (y-y_{\min}) (\frac{h}{y_{\max} - y_{\min}})$\\
+
+\end{frame}
+
+\section{Question 7}
+
+\begin{frame}
+    \frametitle{Question 7a}
+    In many old CRT monitors, the pixels are not square. 
+    Let’s assume the pixel width-to-height aspect ratio is 4:3. 
+    \vspace{1em}
+
+    Suppose in the \textbf{camera coordinate frame}, there is a disc in the z = 0 plane, 
+    centered at (100, 200, 0), and has a radius of 10. 
+
+    You want to draw the entire disc as big as possible inside the window, 
+    and it should appear circular and not oval.
+    \vspace{1em}
+
+    \begin{tcolorbox}
+        If the window size is \underline{\quad\quad}, how would you set up the \textcolor{teal}{viewport} and the
+        \textcolor{violet}{orthographic projection} using OpenGL?
+        \begin{itemize}
+            \item 600 $\times$ 300
+            \item 300 $\times$ 600
+            \item 300 $\times$ 320
+        \end{itemize}
+    \end{tcolorbox}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Visualize}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q7-cam-win.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        Consider the case where the pixels are square first.
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Template}
+
+    \begin{center}
+        \includegraphics[scale=1.4]{q7.png}
+    \end{center}
+
+\end{frame}
+
+\iffalse
+\begin{frame}
+    \frametitle{Things to note}
+
+    \begin{itemize}
+        \item \texttt{glViewport} should span whole window
+        \item How to set the orthographic projection?
+        \item If we set the clipping planes to \texttt{(c.x - r, c.x + r, c.y - r, c.y + r)} 
+        we get an oval across the entire viewport. How do we manipulate this clipping plane to show circle instead?
+    \end{itemize}
+
+\end{frame}
+
+\fi
+
+
+\ThankYou
+\begin{frame}[plain,standout]
+    Thanks! Get the slides here.\\
+    \vspace{2em}
+    \scalebox{3}{\faGithub}\par\bigskip
+    \url{https://trxe.github.io/cs3241-notes}
+\end{frame}
+
+\end{document}
