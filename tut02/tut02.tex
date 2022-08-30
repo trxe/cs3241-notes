@@ -6,7 +6,7 @@
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=white,
+    linkcolor=pink,
     urlcolor=cyan,
     urlbordercolor=cyan,
 }
@@ -23,6 +23,11 @@
 \begin{document}
 
 \frame[plain]{\titlepage}
+
+\begin{frame}[plain,standout]
+    \AlegreyaExtraBold \LARGE
+    Attendance taking
+\end{frame}
 
 \section{Question 1}
 
@@ -91,12 +96,13 @@
 
     \begin{tcolorbox}
         Q: Why don’t we call the display callback function directly to update the image?\\
-        \vspace{1em}
+
+        \vspace{0.5em}
+
         A: \textbf{Multiple calls} to \texttt{glutPostRedisplay} may be made in a single iteration of main loop,
         we don't want to redisplay (reapply graphics to buffer) everytime.
+        \hyperlink{https://www.opengl.org/resources/libraries/glut/spec3/node20.html}{[Reference]}
     \end{tcolorbox}
-
-    \hyperlink{Reference}{https://www.opengl.org/resources/libraries/glut/spec3/node20.html}
 
 \end{frame}
 
@@ -104,7 +110,7 @@
 
 \begin{frame}
     \frametitle{Question 3}
-    How does double buffering work?  Why do we use it?
+    How does double buffering work?
 \end{frame}
 
 \begin{frame}
@@ -129,6 +135,13 @@
     \end{center}
 
     Swapping is fast and seamless.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 3}
+
+    Why do we use double buffering?
 
 \end{frame}
 
@@ -344,6 +357,15 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Template}
+
+    \begin{center}
+        \includegraphics[scale=1.4]{q7.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
     \frametitle{Visualize}
 
     \begin{center}
@@ -357,11 +379,11 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Template}
+    \frametitle{Key takeaway}
 
-    \begin{center}
-        \includegraphics[scale=1.4]{q7.png}
-    \end{center}
+    In 2D orthographic projecton, \textcolor{teal}{aspect ratios must match} between 
+    the clipping space and the window space (\textbf{assuming uniform pixels})
+    to not be distorted.
 
 \end{frame}
 
@@ -380,10 +402,9 @@
 
 \fi
 
-
 \ThankYou
 \begin{frame}[plain,standout]
-    Thanks! Get the slides here.\\
+    Thanks! Get the slides here after the tutorial.\\
     \vspace{2em}
     \scalebox{3}{\faGithub}\par\bigskip
     \url{https://trxe.github.io/cs3241-notes}
