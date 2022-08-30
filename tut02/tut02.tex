@@ -477,17 +477,18 @@
     \frametitle{Alternative: scaled viewport}
 
     \begin{center}
-        \includegraphics[scale=0.4]{q7-cam-win-4.png}
+        \includegraphics[scale=0.3]{q7-cam-win-4.png}
     \end{center}
 
     \begin{tcolorbox}
-        The pixels are \textcolor{red}{4:3}.
-        \texttt{int squishedWidth = w * 3/4;}
+        \small
+        The pixels are \textcolor{red}{4:3}.\\
+        \texttt{int squishedWidth = w * 3/4;}\\
         \texttt{glViewport(0, \textcolor{red}{w / 2 - squishedWidth / 2}, \textcolor{red}{squishedWidth}, h);}\\
         \texttt{glOrtho(c.x - r , c.x + r, c.y - r, c.y + r);}
     \end{tcolorbox}
 
-    Q: What if $h > w$?
+    You can similarly account for the case where $h > w$.
 
 \end{frame}
 
