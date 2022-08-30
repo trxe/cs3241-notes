@@ -374,7 +374,120 @@
 
     \begin{tcolorbox}
         Consider the case where the pixels are square first.
+        Let $w, h$ be the width and height of the viewport, 
+        $c$ be the 2D coordinates of the center of the circle,
+        and $r$ be the radius.
     \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q7-cam-win-1.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        \small
+        \texttt{glViewport(0, 0, w, h);}\\
+        \texttt{glOrtho(c.x - r, c.x + r, c.y - r, c.y + r);}
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q7-cam-win-2.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        \small
+        Assuming the pixels are square, to get this we can:\\
+        \texttt{glViewport(0, 0, w, h);}\\
+        \texttt{glOrtho(c.x - r \textcolor{teal}{* w/h} , c.x + r \textcolor{teal}{* w/h}, \\
+            c.y - r, c.y + r);}
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q7-cam-win-3.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        \small
+        Assuming the pixels are square, to get this we can:\\
+        \texttt{glViewport(0, 0, w, h);}\\
+        \texttt{glOrtho(c.x - r , c.x + r, \\
+        c.y - r \textcolor{teal}{* h/w}, c.y + r \textcolor{teal}{* h/w});}
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{What if we consider the 4:3 pixels?}
+
+    Then we have to make sure the clipping space scales to the 
+    \textbf{apparent aspect ratio}, i.e. $\texttt{apparentWidth} = w \times \frac{4}{3}$.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q7-cam-win-2.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        \small
+        Assuming the pixels are \textcolor{red}{4:3}, to get this we can:\\
+        \texttt{glViewport(0, 0, w, h);}\\
+        \texttt{glOrtho(c.x - r \textcolor{red}{* \texttt{apparentWidth}/h} , \\
+        c.x + r \textcolor{red}{* \texttt{apparentWidth}/h}, c.y - r, c.y + r);}
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q7-cam-win-3.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        \small
+        Assuming the pixels are \textcolor{red}{4:3}, to get this we can:\\
+        \texttt{glViewport(0, 0, w, h);}\\
+        \texttt{glOrtho(c.x - r , c.x + r, \\
+        c.y - r \textcolor{red}{* h/\textcolor{red}{apparentWidth}},\\
+        c.y + r \textcolor{red}{* h/\textcolor{red}{apparentWidth}});}
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Alternative: scaled viewport}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q7-cam-win-4.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        The pixels are \textcolor{red}{4:3}.
+        \texttt{int squishedWidth = w * 3/4;}
+        \texttt{glViewport(0, \textcolor{red}{w / 2 - squishedWidth / 2}, \textcolor{red}{squishedWidth}, h);}\\
+        \texttt{glOrtho(c.x - r , c.x + r, c.y - r, c.y + r);}
+    \end{tcolorbox}
+
+    Q: What if $h > w$?
 
 \end{frame}
 
@@ -386,21 +499,6 @@
     to not be distorted.
 
 \end{frame}
-
-\iffalse
-\begin{frame}
-    \frametitle{Things to note}
-
-    \begin{itemize}
-        \item \texttt{glViewport} should span whole window
-        \item How to set the orthographic projection?
-        \item If we set the clipping planes to \texttt{(c.x - r, c.x + r, c.y - r, c.y + r)} 
-        we get an oval across the entire viewport. How do we manipulate this clipping plane to show circle instead?
-    \end{itemize}
-
-\end{frame}
-
-\fi
 
 \ThankYou
 \begin{frame}[plain,standout]
