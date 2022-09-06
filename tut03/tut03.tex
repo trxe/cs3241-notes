@@ -28,6 +28,11 @@
 
 \begin{frame}
     \frametitle{Question 1a}
+
+    \begin{tcolorbox}[colback=teal!5!white]
+        \textcolor{teal}{pollev.com/wongpeixian775}
+    \end{tcolorbox}
+
     Given three points A, B, and C in 3D space, write an expression for the \textbf{normal vector}
     of the plane that contains the three points.
 \end{frame}
@@ -45,6 +50,10 @@
 
 \begin{frame}
     \frametitle{Question 1b}
+
+    \begin{tcolorbox}[colback=teal!5!white]
+        \textcolor{teal}{pollev.com/wongpeixian775}
+    \end{tcolorbox}
 
     Given a point $R = [r_x \  r_y \  r_z]^T$ on a plane $\Pi$ and a normal vector 
     $n = [n_x \  n_y \  n_z]^T$ of the plane, write the implicit-form equation of 
@@ -79,8 +88,31 @@
     Let $Q = [q_x \  q_y \  q_z]^T$. Then the distance $D$ from point to plane is 
 
     \begin{eqnarray}
-        D = \left| \frac{aq_x + aq_y + aq_z + d}{\sqrt{a^2 + b^2 + c^2}}\right|
+        D = \left| \frac{aq_x + bq_y + cq_z + d}{\sqrt{a^2 + b^2 + c^2}}\right|
     \end{eqnarray}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Proof?}
+
+    \begin{center}
+        \includegraphics[scale=0.5]{distance_perp.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Outline of proof}
+
+    \begin{eqnarray*}
+        D &= \|PQ\| \cos \theta \\
+        \cos \theta &= \widehat{n} \cdot \widehat{PQ} \\
+        &= \frac{n \cdot PQ}{\|n\| \|PQ\|} \\
+        \\
+        \Rightarrow D &= \|PQ\| \frac{n \cdot PQ}{\|n\| \|PQ\|} \\
+        &= \frac{n \cdot (OQ - OP)}{\|n\|}
+    \end{eqnarray*}
 
 \end{frame}
 
@@ -89,6 +121,12 @@
 \begin{frame}
     \frametitle{Question 2a}
 
+    \begin{tcolorbox}[colback=teal!5!white]
+        \textcolor{teal}{pollev.com/wongpeixian775}
+    \end{tcolorbox}
+
+    \vspace{1em}
+    
     What does the homogenous coordinates $[6, 4, 2, 0.5]^T$ represent?
 
 \end{frame}
@@ -127,7 +165,7 @@
     \frametitle{Why homogenous coordinates?}
 
     \begin{enumerate}
-        \item Different representations for points aand vectors.
+        \item Different representations for points and vectors.
         \item $4 \times 4$ Matrix multiplication
         \item Perspective projection with matrix mult. and \textit{perspective division}.
     \end{enumerate}
@@ -161,12 +199,16 @@
 \begin{frame}
     \frametitle{Question 3}
 
+    \begin{tcolorbox}[colback=teal!5!white]
+        \textcolor{teal}{pollev.com/wongpeixian775}
+    \end{tcolorbox}
+
     Which of the followings is the matrix that rotates objects about the fixed 3D point 
     $[2 \  3 \  4]^T$, where the rotation axis is parallel to and in the same direction 
     as the x-axis, and the rotation angle is $\theta$? 
 
     \begin{center}
-        \includegraphics[scale=0.6]{q3-options.png}
+        \includegraphics[scale=0.8]{q3-options.png}
     \end{center}
 
 \end{frame}
@@ -257,6 +299,17 @@
 \begin{frame}
     \frametitle{Step 2: Order}
 
+    \begin{tcolorbox}[colback=teal!5!white]
+        \textcolor{teal}{pollev.com/wongpeixian775}
+    \end{tcolorbox}
+    
+    $M =$ ?
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Step 2: Order}
+
     $M = TSR$.
 
     \vspace{1em}
@@ -296,6 +349,8 @@
 
     $$T(1, 0, 0) R_z(\pi/2) P(1, 0, 0) \neq R_z(\pi/2) T(1, 0, 0) P(1, 0, 0)$$
     $$P(1, 1, 0) \neq P(0, 2, 0)$$
+
+    (Note: $P(x,y,z)$ refers to the point $(x,y,z)$.)
 
 \end{frame}
 
@@ -357,9 +412,77 @@
 \begin{frame}
     \frametitle{Question 8}
 
+    \begin{tcolorbox}[colback=teal!5!white]
+        \textcolor{teal}{pollev.com/wongpeixian775}
+    \end{tcolorbox}
+
+    What are the matrices applied to each vertex $v_1 \dots v_6$?
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 8}
+
     \begin{center}
         \includegraphics[scale=0.5]{q8.png}
     \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Understanding OpenGL's matrix stacks}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q8-1.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Understanding OpenGL's matrix stacks}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q8-2.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Understanding OpenGL's matrix stacks}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q8-3.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Understanding OpenGL's matrix stacks}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q8-4.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Understanding OpenGL's matrix stacks}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q8-5.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Note that}
+
+    \begin{enumerate}
+        \item \texttt{glMultMatrix} \textbf{post-multiplies} the current matrix
+        \item \texttt{glPushMatrix} makes a copy of the topmost matrix of the stack, and makes it the current matrix
+        \item \texttt{glPopMatrix} deletes the top-most matrix and replaces it with the next one on the stack.
+        \item \texttt{glLoadIdentity} replaces the \textbf{current matrix} with $I$.
+    \end{enumerate}
 
 \end{frame}
 
@@ -373,7 +496,9 @@
     Thanks! Get the slides here after the tutorial.\\
     \vspace{2em}
     \scalebox{3}{\faGithub}\par\bigskip
-    \url{https://trxe.github.io/cs3241-notes}
+    \url{https://trxe.github.io/cs3241-notes}\\
+    \vspace{3em}
+    {\small Feel free to ask me questions about Assignment 1.  }
 \end{frame}
 
 \end{document}
