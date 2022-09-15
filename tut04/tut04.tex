@@ -60,29 +60,29 @@
 
 \end{frame}
 
+\iffalse
 \begin{frame}
     \centering
     \includegraphics[scale=0.4]{pg48.png}
 \end{frame}
+\fi
 
-\iffalse
 \begin{frame}
     \centering
     \includegraphics[scale=0.4]{pg48-annot.png}
 \end{frame}
-\fi
-
-\begin{frame}
-    \centering
-    \includegraphics[scale=0.4]{pg49.png}
-\end{frame}
 
 \iffalse
 \begin{frame}
     \centering
-    \includegraphics[scale=0.4]{pg49-annot.png}
+    \includegraphics[scale=0.4]{pg49.png}
 \end{frame}
 \fi
+
+\begin{frame}
+    \centering
+    \includegraphics[scale=0.4]{pg49-annot.png}
+\end{frame}
 
 \begin{frame}[plain,standout]
     \AlegreyaExtraBold \LARGE
@@ -210,8 +210,13 @@
     \frametitle{We can derive our 3 axes as such:}
 
     \begin{center}
-        \includegraphics[scale=1.3]{q3.png}
+        \includegraphics[scale=0.3]{glulookat.png}
     \end{center}
+
+    \begin{tcolorbox}
+        As long as the up-vector is \textbf{not parallel} to the view direction and 
+        \textbf{is not zero vector}, it already \textcolor{teal}{uniquely defines the y-axis} of the camera.
+    \end{tcolorbox}
 
 \end{frame}
 
@@ -219,11 +224,12 @@
     \frametitle{We can derive our 3 axes as such:}
 
     \begin{center}
-        \includegraphics[scale=0.3]{glulookat.png}
+        \includegraphics[scale=1.3]{q3.png}
     \end{center}
 
 \end{frame}
 
+\iffalse
 \begin{frame}
     \frametitle{Default \texttt{gluLookAt} values}
     
@@ -232,6 +238,7 @@
     up = $(0, 1, 0)$\\
 
 \end{frame}
+\fi
 
 \section{Question 4}
 
