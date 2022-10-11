@@ -48,12 +48,14 @@
     \frametitle{Question 1}
 
     \begin{itemize}
-        \item vertex processing
-        \item camera space
+        \item vertex processing: We do calculations per vertex 
+        \item camera space: We need the view direction, it's defined after camera space
     \end{itemize}
     
     \begin{center}
         \includegraphics[scale=0.3]{q1.png}
+        \small
+        Reference at \hyperlink{https://www.glprogramming.com/red/chapter05.html}{RED BOOK}
     \end{center}
 
 \end{frame}
@@ -78,7 +80,6 @@
 
 \end{frame}
 
-\section{Question 3}
 
 \begin{frame}
     \frametitle{Which will result in change of color of a diffuse material?}
@@ -97,6 +98,24 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Which will result in change of color of a diffuse material?}
+
+    \begin{equation*}
+        I_\text{Phong} = I_a k_a + \textcolor{blue}{I_p k_d  (N \cdot L)} + I_p k_s (R \cdot V)^n
+    \end{equation*}
+
+    \begin{enumerate}
+        \item Moving the light source further away from $v$, while maintaining the direction $L$. \textcolor{red}{False. No values changed}
+        \item Moving the light source to a different direction from $v$, while maintaining its distance from $v$. \textcolor{teal}{True. Changes $L$}
+        \item Moving the viewpoint to a different direction from $v$. \textcolor{red}{False. Changes $V$}
+        \item Rotating the normal vector $N$. \textcolor{teal}{True (assuming rotating about an axis that's not itself)}
+    \end{enumerate}
+
+\end{frame}
+
+\section{Question 3}
+
+\begin{frame}
     \frametitle{Question 3}
 
     \begin{tcolorbox}[colback=teal!5!white]
@@ -112,6 +131,15 @@
     \vspace*{1em}
 
     How many distinct vertex normal altogether are needed to model the cylinder?
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{How many faces non-parallel to each other?}
+
+    \begin{center}
+        \includegraphics[scale=0.2]{modeling_meshes_primitives_all.png}
+    \end{center}
 
 \end{frame}
 
@@ -385,7 +413,7 @@
     \frametitle{Retroreflectors in real life}
 
     \begin{center}
-        \includegraphics[scale=0.4]{road-cat-eye.png}
+        \includegraphics[scale=0.7]{road-cat-eye.png}
     \end{center}
 
 \end{frame}
