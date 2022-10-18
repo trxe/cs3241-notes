@@ -27,6 +27,10 @@
 \section{Recap}
 
 \begin{frame}[plain,standout]
+    prepare \url{pollev.com/peixian} for later
+\end{frame}
+
+\begin{frame}[plain,standout]
     \AlegreyaExtraBold \LARGE
     Recap of Texture Mapping
 \end{frame}
@@ -176,8 +180,8 @@
     \frametitle{Question 2}
 
     \begin{tcolorbox}
-        $s = $ arc length between vector (1,0) and ($p_x, p_y$) \\
-        $t = p_z$
+        $s = $ arc length between vector (1,0) and ($p_x, p_y$) $/ 2\pi$ \\
+        $t = p_z / h$
     \end{tcolorbox}
 
     $s \in [0, 1] \mapsto [0, 2\pi]$\\
@@ -321,7 +325,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Solves \textbf{anti-aliasing}!}
+    \frametitle{Solves \textbf{aliasing}!}
 
     We can approximate the pre-image of a fragment as a rectangle, 
     and use the special table S to quickly find the average of the
