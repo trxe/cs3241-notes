@@ -6,7 +6,7 @@
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=orange,
+    linkcolor=white,
     urlcolor=cyan,
     urlbordercolor=cyan,
 }
@@ -75,6 +75,11 @@
     \begin{enumerate}
         \item We don't have to produce light of every wavelength in vis. light spectrum for realism
         \item We can see colors that are \textbf{NOT} on vis. light spectrum (e.g. \textcolor{purple}{\textbf{PURPLE}}).
+        \begin{itemize}
+            \item Visible colors are different combinations of amount of activity in RGB cones
+            \item \textcolor{purple}{Purple} is not a specific wavelength but a combination of red and blue wavelengths 
+            (unlike \textcolor{violet}{violet} which has its own wavelength)
+        \end{itemize}
     \end{enumerate}
 
 \end{frame}
@@ -220,9 +225,7 @@
     
     {\centering \includegraphics[scale=0.4]{simple-pipeline-annot.png}}
 
-    \vspace{1em}
-
-    {\begin{center} \includegraphics[scale=0.3]{q4-vert-prim.png} \end{center}}
+    {\begin{center} \includegraphics[scale=0.28]{q4-vert-prim.png} \end{center}}
 
 \end{frame}
 
@@ -270,7 +273,7 @@
         \item Anything else that vertices may describe
     \end{itemize}
 
-    We use \hyperlink{https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates.html}{barycentric coordinates}.
+    We use \href{https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates.html}{barycentric coordinates}.
 
     \begin{center}
         \includegraphics[scale=0.4]{q6-bary.png}
@@ -297,14 +300,14 @@
     The correct fragments to render are those that are \textbf{closest to the camera} 
     at the same pixel coordinates. 
     
-    We should discard entire hidden surfaces with fragments that should be overwritten.
+    We should discard or overwrite entire hidden surfaces/fragments.
 
 \end{frame}
 
 \begin{frame}
     \frametitle{Hidden Surface Removal}
 
-    If
+    Hence if
     \begin{enumerate}
         \item we have no overlapping surfaces, or
         \item we are already rendering from back to front
@@ -319,15 +322,11 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Some hidden surface removal techniques and why we need them}
+    \frametitle{Some hidden surface removal \href{https://gabrielgambetta.com/computer-graphics-from-scratch/12-hidden-surface-removal.html}{techniques}}
 
     \begin{center}
         \includegraphics[scale=0.2]{hsr.png}
     \end{center}
-
-    {\small
-        \url{https://gabrielgambetta.com/computer-graphics-from-scratch/12-hidden-surface-removal.html}
-    }
 
 \end{frame}
 
@@ -369,13 +368,11 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{WebGL State Machine visualizer/debugger tool}
+    \frametitle{WebGL State Machine \href{https://webglfundamentals.org/webgl/lessons/resources/webgl-state-diagram.html}{visualizer/debugger tool}}
 
     \begin{center}
         \includegraphics[scale=0.2]{webgl-fsm.png}
     \end{center}
-
-    \url{https://webglfundamentals.org/webgl/lessons/resources/webgl-state-diagram.html}
 
 \end{frame}
 
