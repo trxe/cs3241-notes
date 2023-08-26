@@ -6,7 +6,7 @@
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=white,
+    linkcolor=orange,
     urlcolor=cyan,
     urlbordercolor=cyan,
 }
@@ -166,7 +166,7 @@
 
 \begin{frame}
     \frametitle{Question 3}
-    Referring to Lecture 1 Slide 26. If an imaginary image plane is d unit distance in front of the
+    Referring to Lecture 1 Slide 31. If an imaginary image plane is d unit distance in front of the
     pinhole camera, what are the coordinates of the projection (on the imaginary image plane) of
     the 3D point (x, y, z)?
 \end{frame}
@@ -188,7 +188,7 @@
     \frametitle{Perspective}
 
     \begin{center}
-        \includegraphics[scale=0.3]{q3-similar-tris.png}
+        \includegraphics[scale=0.25]{q3-qn.png}
     \end{center}
 
     Notice that $OPZ$ and $OP'Z'$ are similar triangles as their internal angles are identical.
@@ -208,6 +208,10 @@
     \vspace{1em}
 
     {\centering \includegraphics[scale=0.4]{simple-pipeline.png}}
+
+    \begin{tcolorbox}
+        \textbf{Primitive}: One polygonal unit
+    \end{tcolorbox}
 \end{frame}
 
 \begin{frame}
@@ -218,9 +222,7 @@
 
     \vspace{1em}
 
-    \begin{tcolorbox}
-        \textbf{Primitive}: One polygonal unit
-    \end{tcolorbox}
+    {\begin{center} \includegraphics[scale=0.3]{q4-vert-prim.png} \end{center}}
 
 \end{frame}
 
@@ -252,7 +254,27 @@
 
     \vspace{1em}
 
-    {\centering \includegraphics[scale=0.2]{rastertri.png}}
+    {\begin{center} \includegraphics[scale=0.5]{q5-Graphics3D_VertexFragment.png} \end{center}}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rasterization}
+
+    Which attributes can be interpolated?
+    \begin{itemize}
+        \item Position
+        \item Colour
+        \item Normals
+        \item UV coordinates
+        \item Anything else that vertices may describe
+    \end{itemize}
+
+    We use \hyperlink{https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates.html}{barycentric coordinates}.
+
+    \begin{center}
+        \includegraphics[scale=0.4]{q6-bary.png}
+    \end{center}
 
 \end{frame}
 
@@ -266,12 +288,33 @@
 \begin{frame}
     \frametitle{Hidden Surface Removal}
 
+    After rasterization: we can have multiple fragments with the same pixel coordinates.
+
+    \begin{center}
+        \includegraphics[scale=0.25]{q6-hsr.png}
+    \end{center}
+
+    The correct fragments to render are those that are \textbf{closest to the camera} 
+    at the same pixel coordinates. 
+    
+    We should discard entire hidden surfaces with fragments that should be overwritten.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hidden Surface Removal}
+
     If
     \begin{enumerate}
-        \item We have one object with no overlapping surfaces, or
-        \item Painter's Algorithm is already sorting the surfaces from back to front
+        \item we have no overlapping surfaces, or
+        \item we are already rendering from back to front
     \end{enumerate}
     then we don't need hidden surface removal.
+
+    \begin{tcolorbox}
+        HSR also has the added benefit of reducing rendering workload 
+        (remove pixels/whole surfaces from rendering pipeline).
+    \end{tcolorbox}
 
 \end{frame}
 
@@ -279,7 +322,7 @@
     \frametitle{Some hidden surface removal techniques and why we need them}
 
     \begin{center}
-        \includegraphics[scale=0.3]{hsr.png}
+        \includegraphics[scale=0.2]{hsr.png}
     \end{center}
 
     {\small
@@ -376,8 +419,18 @@
     \frametitle{Method from Tutorial answer}
 
     \begin{center}
-        \includegraphics[scale=0.3]{planar.png}
+        \includegraphics[scale=0.25]{planar.png}
     \end{center}
+
+    \begin{enumerate}
+        \item For each vertex, take the cross product of its two neighbouring edges.
+        \item Normalize the cross product.
+        \item Identify if all the cross products of each vertex are the same.
+    \end{enumerate}
+
+    \begin{tcolorbox}
+        Slow because cross product computation is expensive.
+    \end{tcolorbox}
     
 \end{frame}
 
@@ -423,9 +476,17 @@
     then the polygon is planar.
 
     \begin{tcolorbox}
-        This is an improvement as cross product is slightly more computationally expensive than dot product
-        (cross product involves more operations than dot product). Asymptotically the runtime is still the same ($O(n)$).
+        Cross product involves more operations than dot product, so dot product is more efficient to compute. 
+        Asymptotically the runtime is still the same ($O(n)$).
     \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Summary}
+
+    \centering
+    \includegraphics[scale=0.3]{q9-planar.png}
 
 \end{frame}
 
@@ -471,7 +532,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Inner angles}
+    \frametitle{What about inner angles?}
 
     One property of convex polygons: all interior angles $<180^{\circ}$
 
@@ -483,6 +544,8 @@
 
     Checking this is tricky as the dot product of the vectors $v_4- v_5$ and $v_1 - v_5$ gives you $\cos\alpha$, 
     not the cosine of the interior angle $2\pi - \alpha$.
+
+    One way would be to compute the cross product, which we would have done so using the other method anyway.
 
 \end{frame}
 
