@@ -273,11 +273,11 @@
         \item Anything else that vertices may describe
     \end{itemize}
 
-    We use \href{https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates.html}{barycentric coordinates}.
-
-    \begin{center}
-        \includegraphics[scale=0.4]{q6-bary.png}
-    \end{center}
+    Interpolation methods include:
+    \begin{itemize}
+        \item \href{https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates.html}{Barycentric interpolation}
+        \item \href{https://en.wikipedia.org/wiki/Scanline_rendering}{Scanline algorithms (don't worry about this till week 6)}
+    \end{itemize}
 
 \end{frame}
 
@@ -526,6 +526,28 @@
 
     {\tiny Note: I'm omitting that you have to take the $x\mod n$ of each of the $v_x$ here for conciseness. }
     
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example of failing convex test}
+
+    $$
+    \textcolor{green}{n_i} = \|\textcolor{red}{(v_{i-1} - v_{i})} \times \textcolor{blue}{(v_{i+1} - v_{i})}\|
+    $$
+
+    \begin{center}
+        \includegraphics[scale=0.3]{opp-dir.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cross product \textbf{Right hand} rule}
+
+    \begin{center}
+        \includegraphics[scale=0.6]{cross-prod.png}
+    \end{center}
+
 \end{frame}
 
 \begin{frame}
