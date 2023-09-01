@@ -15,7 +15,7 @@
 \usetheme{Arguelles}
 
 \title{Tutorial 2}
-\subtitle{CS3241 Computer Graphics (AY22/23)}
+\subtitle{CS3241 Computer Graphics (AY23/24)}
 \date{\today}
 \author{Wong Pei Xian}
 \institute[]{\email{e0389023@u.nus.edu}}
@@ -33,8 +33,8 @@
 
 \begin{frame}
     \frametitle{Question 1}
-    What is a GLUT display callback function?  
-    Give example events for which the display callback function should be called.
+    What is a GLUT \textbf{display callback} function?  
+    Give example \textbf{events} for which the display callback function should be called.
 \end{frame}
 
 \begin{frame}
@@ -43,7 +43,7 @@
     \begin{tcolorbox}
         \textbf{GLUT}: OpenGL Utility Toolkit (Lecture 2 slide 10), \\
         
-        a \textbf{library} that provides I/O functionality common to \textcolor{teal}{all window systems}.
+        a library that provides \textbf{I/O functionality} common to \textcolor{teal}{all window systems}.
     \end{tcolorbox}
 
     \begin{center}
@@ -55,10 +55,15 @@
 \begin{frame}
     \frametitle{GLUT display callback}
 
+    \begin{tcolorbox}
+        \centering
+        \texttt{glutDisplayFunc(void (*func)(void))}.
+    \end{tcolorbox}
+
     \begin{itemize}
-        \item \texttt{glutDisplayFunc()}
-        \item User-defined callback to register
+        \item Takes in a function pointer to user defined display method \texttt{func}.
         \item Executed on each window refresh.
+        \item \href{https://www.opengl.org/resources/libraries/glut/spec3/node46.html}{OpenGL reference}
     \end{itemize}
 
 \end{frame}
@@ -75,34 +80,27 @@
 \begin{frame}
     \frametitle{\texttt{glutPostRedisplay}}
 
+    \begin{tcolorbox}
+        \textit{Redisplay}: Update of the display output (usually due to a change in internal state).
+    \end{tcolorbox}
+
     The execution of the \texttt{glutPostRedisplay()} function tells GLUT to call the 
     display callback function at the end of the current event loop. \\
 
+    \begin{itemize}
+        \item Sets the redisplay state.
+        \item Multiple calls to \texttt{glutPostRedisplay} simply set the redisplay state multiple times (coalesce multiple display function calls)
+        \item the display callback is only called once on the next cycle.
+    \end{itemize}
+
 \end{frame}
 
 \begin{frame}
-    \frametitle{Question 2}
+    \frametitle{\texttt{glutPostRedisplay}}
 
-    When do we want to call the \texttt{glutPostRedisplay()} function? 
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{}
-
-    When we explicitly want the rendered image to be updated.  
-
-    \vspace{1em}
-
-    \begin{tcolorbox}
-        Q: Why don’t we call the display callback function directly to update the image?\\
-
-        \vspace{0.5em}
-
-        A: \textbf{Multiple calls} to \texttt{glutPostRedisplay} may be made in a single iteration of main loop,
-        we don't want to redisplay (reapply graphics to buffer) everytime.
-        \hyperlink{https://www.opengl.org/resources/libraries/glut/spec3/node20.html}{[Reference]}
-    \end{tcolorbox}
+    \begin{center}
+        \includegraphics[scale=0.3]{images/glutPostRedisplay.png}
+    \end{center}
 
 \end{frame}
 
@@ -121,8 +119,8 @@
     \end{center}
 
     \begin{itemize}
-        \item Back buffer: apply graphics \textbf{WHILE}
-        \item Front buffer: display graphics 
+        \item \textcolor{red}{Back} buffer: \textcolor{red}{apply} graphics \textbf{WHILE}
+        \item \textcolor{blue}{Front} buffer: \textcolor{blue}{display} graphics 
     \end{itemize}
 
 \end{frame}
@@ -134,7 +132,8 @@
         \includegraphics[scale=0.4]{q3-step2.png}
     \end{center}
 
-    Swapping is fast and seamless.
+    \textbf{No "incomplete" frames will be visible,} 
+    as the swap is only performed after the the back buffer is filled.
 
 \end{frame}
 
@@ -157,8 +156,16 @@
         when the rate of graphics feed application $\neq$ window refresh rate.
     \end{tcolorbox}
 
-    Notice how double buffering solves this by making sure graphics are not applied to the currently displayed frame,
-    only swapping the frames when the application is complete.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Double buffering in OpenGL}
+
+    To enable double buffering: \texttt{glutInitDisplayMode}.\\
+
+    To perform the buffer swap in display function: \texttt{glutSwapBuffers}.\\
+
+    \textit{See lecture 3 slide 14.}
 
 \end{frame}
 
@@ -188,7 +195,7 @@
 \begin{frame}
     \frametitle{Question 5a}
 
-    What is an OpenGL viewport?
+    (A) What is an OpenGL viewport?
 \end{frame}
 
 \begin{frame}
@@ -203,7 +210,7 @@
 \begin{frame}
     \frametitle{Question 5b}
 
-    How do you specify one?
+    (B) How do you specify one?
 \end{frame}
 
 \begin{frame}
@@ -226,7 +233,7 @@
 \begin{frame}
     \frametitle{Question 5c}
 
-    Can we have \textbf{multiple viewports} in one window?
+    (C) Can we have \textbf{multiple viewports} in one window?
 \end{frame}
 
 \begin{frame}
@@ -235,6 +242,8 @@
     \begin{center}
         \includegraphics[scale=0.3]{multiple-viewports.png}
     \end{center}
+
+    [3DSMax] Each viewport has a different perspective of the same world.
 
 \end{frame}
 
@@ -245,14 +254,18 @@
         \includegraphics[scale=0.2]{it-takes-two.jpg}
     \end{center}
 
+    [It Takes Two] Different camera movements possible.
+
 \end{frame}
 
 \begin{frame}
     \frametitle{Question 5d, 5e}
 
-    Can a viewport be larger than the window?
+    (D) Can a viewport be larger than the window? \\
+
     \vspace{1em}
-    If yes, what will happen?
+
+    (E) If yes, what will happen?
 \end{frame}
 
 \begin{frame}
@@ -276,15 +289,17 @@
     \frametitle{Specification example}
 
     \begin{center}
-        \includegraphics[scale=0.4]{viewport-window.png}
+        \includegraphics[scale=0.3]{viewport-window.png}
     \end{center}
+
+    Consequence is that the viewport will be clipped by the window.
     
 \end{frame}
 
 \begin{frame}
     \frametitle{Question 5f}
 
-    When you use \texttt{glClear(GL\_COLOR\_BUFFER\_BIT)},
+    (F) When you use \texttt{glClear(GL\_COLOR\_BUFFER\_BIT)},
     are you clearing the entire window or just the viewport?
 \end{frame}
 
@@ -295,7 +310,11 @@
     are you clearing the entire window or just the viewport?
 
     \begin{tcolorbox}
-        Answer: the window.
+        Short answer: the window.
+
+        Long answer: \texttt{glClear(mask)} marks the \textbf{buffer} to be cleared.
+        The buffer is associated with the \textbf{window} i.e. the (physically) visible area, 
+        not the (virtual) viewport.
     \end{tcolorbox}
 \end{frame}
 
@@ -474,6 +493,25 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Key takeaway}
+
+    In 2D orthographic projecton, \textcolor{teal}{aspect ratios must match} between 
+    the clipping space and the window space (\textbf{assuming uniform pixels})
+    to not be distorted.
+
+    \begin{tcolorbox}
+        If the window size is \underline{\quad\quad}, how would you set up the \textcolor{teal}{viewport} and the
+        \textcolor{violet}{orthographic projection} using OpenGL?
+        \begin{itemize}
+            \item 600 $\times$ 300 $\rightarrow \textbf{800} \times 300$ \textbf{(horizontal)}
+            \item 300 $\times$ 600 $\rightarrow \textbf{400} \times 600$ \textbf{(vertical)}
+            \item 300 $\times$ 320 $\rightarrow \textbf{400} \times 320$ \textbf{(horizontal)}
+        \end{itemize}
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
     \frametitle{Alternative: scaled viewport}
 
     \begin{center}
@@ -489,15 +527,6 @@
     \end{tcolorbox}
 
     You can similarly account for the case where $h > w$.
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Key takeaway}
-
-    In 2D orthographic projecton, \textcolor{teal}{aspect ratios must match} between 
-    the clipping space and the window space (\textbf{assuming uniform pixels})
-    to not be distorted.
 
 \end{frame}
 
