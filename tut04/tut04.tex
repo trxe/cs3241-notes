@@ -58,21 +58,8 @@
 \iffalse
 \begin{frame}
     \centering
-    \includegraphics[scale=0.4]{pg48.png}
-\end{frame}
-\fi
-
-\begin{frame}
-    \centering
     \includegraphics[scale=0.4]{pg48-annot.png}
 \end{frame}
-
-\iffalse
-\begin{frame}
-    \centering
-    \includegraphics[scale=0.4]{pg49.png}
-\end{frame}
-\fi
 
 \begin{frame}
     \centering
@@ -83,13 +70,14 @@
     \AlegreyaExtraBold \LARGE
     Tutorial
 \end{frame}
+\fi
 
 \section{Question 1}
 
 \begin{frame}
     \frametitle{Question 1a}
     Referring to Lecture 1 Slide 31. If an imaginary image plane is $d$ unit distance in front of the pinhole camera, 
-    what are the coordinates of the projection (on the imaginary image plane) of the 3D point (x, y, z)? 
+    what are the coordinates of the \textbf{projection} (on the imaginary image plane) of the 3D point (x, y, z)? 
 
     \vspace{1em}
 
@@ -102,7 +90,7 @@
     \frametitle{Question 1a}
 
     \begin{center}
-        \includegraphics[scale=0.5]{q1-pinhole.png}
+        \includegraphics[scale=0.4]{q1-pinhole.png}
     \end{center}
     
     \vspace{1em}
@@ -113,6 +101,8 @@
         $ x' = \frac{dx}{z} \quad y' = \frac{dy}{z} \quad z' = d$
     \end{tcolorbox}
 
+    To project simply scale the ray to hit the surface.
+
 \end{frame}
 
 \begin{frame}
@@ -120,17 +110,6 @@
     In the above setup, the camera's center of projection is conveniently located at the origin of the “world” coordinate frame, 
     and pointed in the z direction. If the camera's center of projection is not located at the origin, and the camera is pointed in an 
     arbitrary direction, the calculation of the projection becomes very messy. How would you make it less messy?
-\end{frame}
-
-\begin{frame}
-    \frametitle{Question 1b}
-
-    Reorient the world \textbf{with respect to the camera's rotation and translation}.
-
-    \vspace{1em}
-
-    Visualization: \url{https://imgur.com/a/sXuYgaM}
-    
 \end{frame}
 
 \begin{frame}
@@ -151,16 +130,8 @@
 
 \end{frame}
 
-\section{Question 2}
-
 \begin{frame}
-    \frametitle{Question 2}
-
-    Why do we want to perform view transformation?
-\end{frame}
-
-\begin{frame}
-    \frametitle{See Q1b}
+    \frametitle{Q1b}
 
     \begin{center}
         \includegraphics[scale=1.3]{q1b-orig.png}
@@ -169,10 +140,88 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{See Q1b}
+    \frametitle{Q1b}
 
     \begin{center}
         \includegraphics[scale=1.3]{q1b-align.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 1b}
+
+    Reorient the world \textbf{with respect to the camera's rotation and translation}.
+
+    \vspace{1em}
+
+    Visualization: \url{https://imgur.com/a/sXuYgaM}
+    
+\end{frame}
+
+\section{Question 2}
+
+\begin{frame}
+    \frametitle{Question 2}
+
+    Why do we want to perform view transformation?
+    \begin{center}
+        \includegraphics[scale=0.15]{images/matrix-view_transform.png}
+    \end{center}
+
+    \begin{tcolorbox}
+        \begin{equation*}
+            M_\text{view} = R T
+        \end{equation*}
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Benefits}
+
+    \begin{enumerate}
+        \item Can reorient camera position within the world without manually changing all vertices' coordinates.
+        \item Can perform \textbf{perspective projection}
+        \begin{itemize}
+            \item Why do we need perspective projection?
+        \end{itemize}
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Perspective projection matrix (simplified)}
+
+    \begin{tcolorbox}
+        \begin{equation*}
+            M_p v 
+            = \left[ \begin{matrix}
+                1 & 0 & 0 & 0\\
+                0 & 1 & 0 & 0\\
+                0 & 0 & 1 & 0\\
+                0 & 0 & \textcolor{red}{1} & 0\\
+            \end{matrix} \right]
+            \left[ \begin{matrix} x \\ y \\ z \\ 1 \\ \end{matrix} \right]
+            = \left[ \begin{matrix} x \\ y \\ z \\ z \\ \end{matrix} \right]
+            \textcolor{teal}{\rightarrow \left[ \begin{matrix} x/z \\ y/z \\ 1 \\ 1 \\ \end{matrix} \right]}
+        \end{equation*}
+    \end{tcolorbox}
+
+    Here $M_p$ is a basic projection matrix that simply projects any light ray from the pinhole (eye)
+    through the point onto a virtual plane, setting up the homogenous coordinate such that
+    \textcolor{teal}{perspective division scales the resulting image into what would be captured at distance 1 from eye}.
+
+    {\footnotesize The actual perspective division matrix is more complex as it must account for the 
+    transformation to NDC space.}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Perspective projection matrix (simplified)}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{images/perspective-proj-simple.png}
     \end{center}
 
 \end{frame}
@@ -264,9 +313,9 @@
     \vspace{1em}
 
     \begin{tcolorbox}
-        $z$ axis: $n$ = eye - at = $(0, 0, -1)$\\
-        $x$ axis: $u$ = $\|up\| \times \|n\| = (1, 0, 0)$\\
-        $y$ axis: $v$ = $\|n\| \times \|u\| = (0, 0, -1) \times (1, 0, 0) = (0, -1, 0)$\\
+        $z$ axis: $n$ = eye - at = $(0, 0, -1)$ (camera looks in the -z direction!)\\
+        $x$ axis: $u$ = $norm(up) \times norm(n) = (1, 0, 0)$\\
+        $y$ axis: $v$ = $norm(n) \times norm(u) = (0, 0, -1) \times (1, 0, 0) = (0, -1, 0)$\\
         camera position = $(e_x, e_y, e_z)$\\
     \end{tcolorbox}
 
@@ -371,6 +420,15 @@
 
 \end{frame}
 
+\begin{frame}
+    \frametitle{Perspective Projection Matrix (full)}
+
+    \begin{center}
+        \includegraphics[scale=0.4]{images/perspective-proj-full.png}
+    \end{center}
+
+\end{frame}
+
 \section{Question 6}
 
 \begin{frame}
@@ -417,6 +475,13 @@
 
 \end{frame}
 
+\begin{frame}
+    \frametitle{Visualization}
+
+    \includegraphics[scale=0.5]{images/q7-vis.png}
+
+\end{frame}
+
 \iffalse
 \begin{frame}
     \frametitle{Question 7}
@@ -432,6 +497,13 @@
 
 \end{frame}
 \fi
+
+\begin{frame}
+    \frametitle{Code}
+
+    
+
+\end{frame}
 
 \begin{frame}
     \frametitle{Code}
@@ -505,7 +577,6 @@
     Attendance taking
 \end{frame}
 
-\ThankYou
 \begin{frame}[plain,standout]
     Thanks! Get the slides here after the tutorial.\\
     \vspace{2em}
