@@ -122,7 +122,7 @@
     \small
     \begin{itemize}
         \item \textcolor{orange}{Camera axes} and \textcolor{blue}{world axes} are not not equivalent
-        \item The cone is represented in \textcolor{blue}{world axes}.
+        \item The cone is represented in \textcolor{blue}{world space coordinates}.
         \item We undo the transformation by \textbf{translating everything by the camera's distance from the origin},
         \item and then \textbf{rotating everything by the camera's rotation}.
         \item And now the \textcolor{orange}{camera axes} and \textcolor{blue}{world axes} are aligned.
@@ -452,7 +452,7 @@
 
     \begin{tcolorbox}[colback=violet!5!white]
         \begin{center}
-            \texttt{glOrtho( 3, 7, -2, 4, 5, 15);}
+            \texttt{glFrustum( 3, 7, -2, 4, 5, 15);}
         \end{center}
     \end{tcolorbox}
 
@@ -497,13 +497,6 @@
 
 \end{frame}
 \fi
-
-\begin{frame}
-    \frametitle{Code}
-
-    
-
-\end{frame}
 
 \begin{frame}
     \frametitle{Code}
@@ -570,12 +563,12 @@
     order of any two points on the same projector and in the 
     view volume. (Quite tedious)
 \end{frame}
-\fi
 
 \begin{frame}[plain,standout]
     \AlegreyaExtraBold \LARGE
     Attendance taking
 \end{frame}
+\fi
 
 \begin{frame}[plain,standout]
     Thanks! Get the slides here after the tutorial.\\
