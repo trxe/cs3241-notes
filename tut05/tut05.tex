@@ -15,7 +15,7 @@
 \usetheme{Arguelles}
 
 \title{Tutorial 5}
-\subtitle{CS3241 Computer Graphics (AY22/23)}
+\subtitle{CS3241 Computer Graphics (AY23/24)}
 \date{\today}
 \author{Wong Pei Xian}
 \institute[]{\email{e0389023@u.nus.edu}}
@@ -26,19 +26,28 @@
 
 \section{Lecture 6}
 
-\begin{frame}[plain,standout]
-    \AlegreyaExtraBold \LARGE
-    Lecture 6 Wrapup
-\end{frame}
-
 \begin{frame}
-    \frametitle{Hidden Surface Removal Algorithms}
+    \frametitle{Summary}
 
-    \begin{enumerate}
-        \item Painter's Algorithm (Depth sorting)
-        \item Back-face culling
-        \item Image space (Ray-tracing, closest polygon per pixel)
-    \end{enumerate}
+    \begin{itemize}
+        \item Clipping 
+        \begin{itemize}
+            \item Cohen Sutherland (Line Clipping)
+            \item Polygon Clipping
+            \item Simple early acceptance/rejection
+        \end{itemize}
+        \item Rasterization of Line Segments
+        \begin{itemize}
+            \item Digital Differential Analyzer
+            \item Bressenham's Algorithm
+        \end{itemize}
+        \item Culling
+        \begin{itemize}
+            \item Painter's Algorithm (Depth sorting)
+            \item Back-face culling
+            \item Image space (Ray-tracing, closest polygon per pixel)
+            \end{itemize}
+    \end{itemize}
 
 \end{frame}
 
@@ -291,12 +300,16 @@
 \begin{frame}
     \frametitle{Minimizing z-fighting}
 
+    Since z-buffer values have to be between $[0, 1]$, the bottleneck (for the number of possible z-buffer values)
+    is the \textbf{precision/bit count} of the floating point value (16, 32, or 64).
+
     \begin{enumerate}
         \item Increase the \textcolor{magenta}{precision} (number of bits) of z-buffer value.
         \item Decrease the \textcolor{teal}{distance between the near and far} plane (how is z-buffer value calculated?)
         \begin{itemize}
-            \item $\frac{z - \text{near}}{\text{near} - \text{far}}$
-            \item By decreasing this distance the z-buffer distance has less significant values.
+            \item $[\text{near}, \text{far}] \mapsto [0, 1]$
+            \item range of possible values with same z-buffer value: 
+                $[\text{near}, (\text{near} - \text{far})/(2^N)]$
         \end{itemize}
     \end{enumerate}
 
