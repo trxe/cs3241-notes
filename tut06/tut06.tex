@@ -15,7 +15,7 @@
 \usetheme{Arguelles}
 
 \title{Tutorial 6}
-\subtitle{CS3241 Computer Graphics (AY22/23)}
+\subtitle{CS3241 Computer Graphics (AY23/24)}
 \date{\today}
 \author{Wong Pei Xian}
 \institute[]{\email{e0389023@u.nus.edu}}
@@ -29,11 +29,8 @@
 \begin{frame}
     \frametitle{Question 1}
 
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
-
-    \vspace*{1em}
+    % \begin{tcolorbox}[colback=teal!5!white] \textcolor{teal}{pollev.com/peixian} \end{tcolorbox}
+    % \vspace*{1em}
 
     In which pipeline stage and in which coordinate space is the OpenGL 
     \textbf{built-in lighting computation} performed? 
@@ -65,9 +62,7 @@
 \begin{frame}
     \frametitle{Question 2}
 
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
+    %\begin{tcolorbox}[colback=teal!5!white] \textcolor{teal}{pollev.com/peixian} \end{tcolorbox}
 
     We are using Phong Illumination Equation 
 
@@ -118,10 +113,8 @@
 \begin{frame}
     \frametitle{Question 3}
 
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
-    \vspace*{1em}
+    % \begin{tcolorbox}[colback=teal!5!white] \textcolor{teal}{pollev.com/peixian} \end{tcolorbox}
+    % \vspace*{1em}
 
     A closed cylinder (with top and bottom caps) is approximated by 32 rectangles on its 
     smooth curved surface. 
@@ -130,15 +123,15 @@
 
     \vspace*{1em}
 
-    How many distinct vertex normal altogether are needed to model the cylinder?
+    How many \textbf{distinct} vertex normal altogether are needed to model the cylinder?
 
 \end{frame}
 
 \begin{frame}
-    \frametitle{How many faces non-parallel to each other?}
+    \frametitle{Vertex Normals of a Cylinder}
 
     \begin{center}
-        \includegraphics[scale=0.2]{modeling_meshes_primitives_all.png}
+        \includegraphics[scale=0.4]{images/solid_cylinder_normals.png}
     \end{center}
 
 \end{frame}
@@ -197,7 +190,8 @@
     \frametitle{Red shiny plastic}
 
     \begin{center}
-        \includegraphics[scale=0.2]{q5-red.png}
+        \includegraphics[scale=0.15]{q5-red.png}
+        \includegraphics[scale=0.03]{red-billiard.jpg}
     \end{center}
 
     \begin{enumerate}
@@ -212,7 +206,8 @@
     \frametitle{Dry white clay}
 
     \begin{center}
-        \includegraphics[scale=0.2]{q5-white-clay.png}
+        \includegraphics[scale=0.15]{q5-white-clay.png}
+        \includegraphics[scale=0.1]{white-clay.jpg}
     \end{center}
 
     \begin{enumerate}
@@ -227,7 +222,8 @@
     \frametitle{Brushed Bronze}
 
     \begin{center}
-        \includegraphics[scale=0.2]{q5-bronze.png}
+        \includegraphics[scale=0.18]{q5-bronze.png}
+        \includegraphics[scale=0.1]{bronze-pot.jpg}
     \end{center}
 
     \begin{enumerate}
@@ -267,12 +263,8 @@
 \begin{frame}
     \frametitle{Blinn Phong $H$ vector}
 
-
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
-
-    \vspace*{1em}
+    % \begin{tcolorbox}[colback=teal!5!white] \textcolor{teal}{pollev.com/peixian} \end{tcolorbox}
+    % \vspace*{1em}
 
     Write an expression to compute $H$. Note that $H$ must be a unit vector.
 
@@ -339,6 +331,7 @@
         \item If $L$, $V$ are far, then $L$, $V$ are mostly constant across surface points
         \item Value of $H$ can be cached
         \item Unlike for $R$, which must be recomputed per surface point (different $N$ per surface point).
+        \item Hence computation of $N \cdot H$ is faster than $R \cdot V$.
     \end{itemize}
 
 \end{frame}
@@ -364,11 +357,8 @@
 \begin{frame}
     \frametitle{Question 7}
 
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
-
-    \vspace*{1em}
+    % \begin{tcolorbox}[colback=teal!5!white] \textcolor{teal}{pollev.com/peixian} \end{tcolorbox}
+    % \vspace*{1em}
 
     \begin{tcolorbox}
         Suppose we have a retroreflective material that behaves very similarly to a Phong material,
