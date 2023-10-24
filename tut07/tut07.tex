@@ -15,7 +15,7 @@
 \usetheme{Arguelles}
 
 \title{Tutorial 7}
-\subtitle{CS3241 Computer Graphics (AY22/23)}
+\subtitle{CS3241 Computer Graphics (AY23/24)}
 \date{\today}
 \author{Wong Pei Xian}
 \institute[]{\email{e0389023@u.nus.edu}}
@@ -27,25 +27,20 @@
 \section{Recap}
 
 \begin{frame}[plain,standout]
-    prepare \url{pollev.com/peixian} for later
-\end{frame}
-
-\begin{frame}[plain,standout]
     \AlegreyaExtraBold \LARGE
     Recap of Texture Mapping
 \end{frame}
 
 \begin{frame}
-    \frametitle{Texture Mapping}
+    \frametitle{Textures}
 
     \begin{itemize}
-        \item One of the most foreign parts of graphics programming
-        \item Many parameters and states for \textbf{fragment processing}
+        \item Arguably the single most important feature of any graphics engine is to support textures
         \begin{itemize}
-            \item Texture magnification
-            \item Mipmapping (texture minification)
-            \item Framebuffer data
-            \item Texture environments
+            \item Object Texture mapping
+            \item Environment mapping
+            \item Antialiasing (mipmaps)
+            \item Texture objects/Framebuffer objects
         \end{itemize}
     \end{itemize}
 
@@ -171,14 +166,6 @@
 \begin{frame}
     \frametitle{Question 2}
 
-    Demo!
-
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Question 2}
-
     \begin{tcolorbox}
         $s = $ arc length between vector (1,0) and ($p_x, p_y$) $/ 2\pi$ \\
         $t = p_z / h$
@@ -192,11 +179,109 @@
 \section{Question 3}
 
 \begin{frame}
-    \frametitle{Question 3a}
+    \frametitle{An aside into \textbf{Aliasing}}
 
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
+    \begin{tcolorbox}
+        \textbf{Nyquist rate}: 2$\times$ the highest frequency of a function/signal
     \end{tcolorbox}
+    \textbf{Aliasing} occurs when \textbf{sampling at a rate below} the Nyquist rate.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{What's being sampled here?}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{images/aliased-tri.png}
+    \end{center}
+
+    If we only sample one point per texel, we are definitely sampling below the Nyquist rate
+    (which would be 2 points per pixel).
+
+    Effects appear as \textbf{jaggies} or \textbf{Moire} patterns.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Examples of moire}
+
+    \includegraphics[scale=0.3]{images/small-moire-artifact.jpg}
+
+    Also see \href{https://www.youtube.com/watch?v=ovztfpWPo5M}{video example}.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{3 contributors to aliasing}
+
+    The aliasing problem occurs:
+    \begin{enumerate}
+        \item Along edges primitive's edges
+        \item In tiny objects
+        \item Within complicated detail
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Solutions to aliasing}
+
+    \begin{enumerate}
+        \item Increase resolution
+        \item Low-pass filter
+        \begin{itemize}
+            \item Contour smoothing/box filter areas on screenspace to sample
+        \end{itemize}
+        \item Prefiltering
+        \begin{itemize}
+            \item Prefilters of different levels as \textbf{mipmaps}
+            \item Makes each fragment represent \textbf{the average} of a finite area in scene
+            \item As opposed to a single point
+        \end{itemize}
+        \item Increase resolution
+    \end{enumerate}
+    Most of \textbf{antialiasing} today is based on a combination of the 3.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Types of AA}
+
+    \begin{itemize}
+        \item FSAA/SSAA: Fullscreen/Super sampling anti-aliasing
+        \item MSAA: Multisample anti-aliasing
+        \item \href{http://blog.simonrodriguez.fr/articles/2016/07/implementing_fxaa.html}{FXAA} (Lottes sampling): Fast approximate anti-aliasing
+        \item SMAA: Enhanced Subpixel Morphological Anti-aliasing (combined modular method)
+        \item TAA: Temporal Anti-aliasing (sampling frames)
+    \end{itemize}
+
+    Excellent summary paper by \href{https://kth.diva-portal.org/smash/get/diva2:1106244/FULLTEXT01.pdf}{Kesten (2017)}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Overview of SSAA, MSAA, FXAA}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{images/antialiasing.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Why mipmaps then?}
+
+    By prefiltering the higher resolution (aka higher frequency with higher Nyquist rate) maps,
+    we get lower resolution maps. The sampled values thus change less often.
+
+    \begin{center}
+        \includegraphics[scale=0.3]{images/mipmaps.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Question 3a}
 
     Given a 512 $\times$ 512 texture image, we want to create a mipmap from it and use the appropriate mipmap level 
     during rendering. 
@@ -226,10 +311,6 @@
 \begin{frame}
     \frametitle{Question 3b}
 
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
-
     The mipmap is used to texture-map a 3D square that appears in a 100 $\times$ 100 region on the screen. 
     What is the best integer mipmap level to use to texture-map the square? 
     Assume that we \textit{prefer a more blurred rendered image} if the exact level is not an integer. 
@@ -257,10 +338,6 @@
 \begin{frame}
     \frametitle{Question 3c}
 
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
-
     Some rendering systems can actually take non-integer mipmap level and compute the result by interpolating between 
     two mipmap levels. (aka \textbf{\textit{Trilinear interpolation}})
 
@@ -268,6 +345,26 @@
     
     In the case of Part (b), what is the exact mipmap level to use to texture-map the square? Round your answer to 2 decimal places. 
     You can use the formula $\log_2(x) = \log_{10}(x) / \log_{10}(2)$.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Trilinear interpolation}
+
+    \begin{enumerate}
+        \item Mip level 2 ($128 \times 128$): Sample value A
+        \begin{itemize}
+            \item $\log(128) = 7$
+        \end{itemize}
+        \item Mip level 3 ($64 \times 64$): Sample value B
+        \begin{itemize}
+            \item $\log(64) = 6$
+        \end{itemize}
+        \item $\log(100) \approx 6.643$
+        \item Thus the sampled value hsould be interpolated between A and B as
+        \texttt{lerp(B, A, fract(log(100)))} where \texttt{fract} returns the 
+        fractional component of the number returned.
+    \end{enumerate}
 
 \end{frame}
 
@@ -344,21 +441,15 @@
     Compare the quality of the rendered image produced by the technique you have learned in class, 
     with that using the special table S?  What attributes to the difference?
 
-    \begin{tcolorbox}
-        What do we compare Summed Area Table to?
-    \end{tcolorbox}
-
 \end{frame}
 
 \begin{frame}
     \frametitle{Quality comparison}
 
     \begin{tcolorbox}
-        Ans: Mipmapping
+        The rendered image will look better and sharper with Summed Area Tables.
     \end{tcolorbox}
-
-    The rendered image will look better and sharper
-    This is because it can have a \textbf{more accurate approximation} of the pre-image
+    Textures with SAT are a \textbf{more accurate approximation} of the pre-image
     region of the fragment (\textbf{arbitrary region in constant time}).
 
 \end{frame}
@@ -401,10 +492,6 @@
 \begin{frame}
     \frametitle{Question 5c}
 
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
-
     Suppose you can extend the functionalities in any stage of the raster graphics pipeline. 
     We want to render polygons with bump-mapping. 
 
@@ -440,10 +527,6 @@
 
 \begin{frame}
     \frametitle{Question 5d}
-
-    \begin{tcolorbox}[colback=teal!5!white]
-        \textcolor{teal}{pollev.com/peixian}
-    \end{tcolorbox}
 
     In a virtual outdoor scene, each tree is rendered using a vertical rectangular billboard. 
     The vertical axis of the world is the z-axis. The viewpoint is at ($v_x, v_y, v_z$). 
