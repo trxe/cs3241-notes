@@ -117,6 +117,7 @@
 
 \end{frame}
 
+\iffalse
 \section{Recap: Parametric}
 
 \begin{frame}[plain, standout]
@@ -275,6 +276,7 @@
     \end{bmatrix}^T$}.
 
 \end{frame}
+\fi
 
 \section{Question 4}
 
@@ -356,6 +358,14 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Continuity}
+
+    \centering
+    \includegraphics[scale=0.3]{continuity.png}
+
+\end{frame}
+
+\begin{frame}
     \frametitle{$C^1$ continuity}
 
     \begin{enumerate}
@@ -373,15 +383,6 @@
 \end{frame}
 
 \section{Question 7}
-
-\begin{frame}
-    \frametitle{Continuity}
-
-    \centering
-    \includegraphics[scale=0.3]{continuity.png}
-
-\end{frame}
-
 \begin{frame}
     \frametitle{Question 7}
     Sketch two 2D curves that have $C^0$ continuity but not $C^1$ continuity.
@@ -424,6 +425,12 @@
     \frametitle{Question 9}
     Given 4 control points $p_0, p_1, p_2, p_3$ for a cubic Bézier curve segment $p(u)$, and any $0 \le u \le 1$
     show that the De Casteljau algorithm produces the point $p(u)$.
+
+    \begin{tcolorbox}
+        \begin{equation}
+            p(u) = (1–u^)3 p_0 + 3u (1–u)^2 p_1 + 3u^2 (1–u) p_2 + u^3 p_3
+        \end{equation}
+    \end{tcolorbox}
 \end{frame}
 
 \begin{frame}
@@ -431,6 +438,27 @@
 
     \begin{center}
         \includegraphics[scale=0.4]{q9-decasteljau.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Approach: Unpack the Lerps}
+
+    \begin{tcolorbox}
+        Linear Interpolation of degree $t$ along points $a, b$:
+        \begin{equation}
+            \mathrm{lerp}(t, a, b) = (1 - t)a + b
+        \end{equation}
+    \end{tcolorbox}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Unpacked all lerps}
+
+    \begin{center}
+        \includegraphics[width=\linewidth]{derive-bezier.png}
     \end{center}
 
 \end{frame}
